@@ -1,5 +1,7 @@
 package pokeapi
 
+import "fmt"
+
 type Pokemon struct {
 	Abilities []struct {
 		Ability struct {
@@ -242,4 +244,19 @@ type Pokemon struct {
 		} `json:"type"`
 	} `json:"types"`
 	Weight int `json:"weight"`
+}
+
+func (p Pokemon) String() string {
+	val := fmt.Sprintf("Name: %s\n", p.Name)
+	val += fmt.Sprintf("Height: %d\n", p.Height)
+	val += fmt.Sprintf("Weight: %d\n", p.Weight)
+	val += fmt.Sprintln("Stats:")
+	for _, stat := range p.Stats {
+		val += fmt.Sprintf("  -%s: %d\n", stat.Stat.Name, stat.BaseStat)
+	}
+	val += fmt.Sprintln("Types:")
+	for _, t := range p.Types {
+		val += fmt.Sprintf("  -%s\n", t.Type.Name)
+	}
+	return val
 }
